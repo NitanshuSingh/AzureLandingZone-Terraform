@@ -1,0 +1,6 @@
+variable "strg" {
+}
+
+variable "blob" {
+  
+}
