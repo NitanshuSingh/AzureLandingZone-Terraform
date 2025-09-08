@@ -27,7 +27,7 @@ subnet = {
     vnet_name           = "app-vnet"
     address_prefixes    = ["10.0.1.0/24"]
   }
-    subnet3 = {
+  subnet3 = {
     subnet_name         = "AzureBastionSubnet"
     resource_group_name = "app-rg"
     vnet_name           = "app-vnet"
@@ -42,22 +42,13 @@ nsg = {
     resource_group_name = "app-rg"
     security_rule = {
       rule1 = {
-        name                   = "allowFromVnetOnly"
+        name                   = "allow"
         priority               = 100
         direction              = "Inbound"
         access                 = "Allow"
         source_port_range      = "*"
         protocol               = "Tcp"
-        destination_port_range = "22"
-      }
-      rule2 = {
-        name                   = "allowFromVnet"
-        priority               = 110
-        direction              = "Inbound"
-        access                 = "Allow"
-        source_port_range      = "*"
-        protocol               = "Tcp"
-        destination_port_range = "443"
+        destination_port_range = "*"
       }
     }
   }
@@ -73,16 +64,7 @@ nsg = {
         access                 = "Allow"
         source_port_range      = "*"
         protocol               = "Tcp"
-        destination_port_range = "22"
-      }
-      rule2 = {
-        name                   = "allowFromVnet"
-        priority               = 110
-        direction              = "Inbound"
-        access                 = "Allow"
-        source_port_range      = "*"
-        protocol               = "Tcp"
-        destination_port_range = "443"
+        destination_port_range = "*"
       }
     }
   }
@@ -91,6 +73,11 @@ nsg = {
 pip = {
   pip1 = {
     pip_name            = "test-pip"
+    location            = "centralindia"
+    resource_group_name = "app-rg"
+  }
+  pip2 = {
+    pip_name            = "frontend-pip"
     location            = "centralindia"
     resource_group_name = "app-rg"
   }
@@ -106,7 +93,7 @@ linux-vm = {
     nsg_name            = "nsg1"
     vm-name             = "frontend-vm"
     size                = "Standard_F2"
-    password            = "KoiP@$$w0rdNiHai"
+    password            = "Password@123"
   }
   vm2 = {
     nic_name            = "nic2"
@@ -122,12 +109,40 @@ linux-vm = {
 }
 
 bastion = {
-  bastion1= {
-    bastion_name = "app-bastion"
-    location = "centralindia"
+  bastion1 = {
+    bastion_name        = "app-bastion"
+    location            = "centralindia"
     resource_group_name = "app-rg"
-    pip_name = "test-pip"
-    subnet_name = "AzureBastionSubnet"
-    vnet_name = "app-vnet"
+    pip_name            = "test-pip"
+    subnet_name         = "AzureBastionSubnet"
+    vnet_name           = "app-vnet"
+  }
+}
+
+lb = {
+  lb1 = {
+    lb_name             = "app-lb"
+    location            = "centralindia"
+    resource_group_name = "app-rg"
+    frontend_ip_name    = "frontend-ip"
+    pip_name            = "frontend-pip"
+    lb_pool_name        = "app-backend-pool"
+    lb_probe_name       = "app-lb-probe"
+    lb_rule_name        = "app-lb-rule"
+  }
+}
+
+association = {
+  assoc1 = {
+    lb_name             = "app-lb"
+    lb_pool_name        = "app-backend-pool"
+    nic_name            = "nic1"
+    resource_group_name = "app-rg"
+  }
+  assoc2 = {
+    lb_name             = "app-lb"
+    lb_pool_name        = "app-backend-pool"
+    nic_name            = "nic2"
+    resource_group_name = "app-rg"
   }
 }
