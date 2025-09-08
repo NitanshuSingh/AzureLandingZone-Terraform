@@ -14,7 +14,7 @@ resource "azurerm_network_security_group" "example" {
       protocol                   = security_rule.value.protocol
       source_port_range          = security_rule.value.source_port_range
       destination_port_range     = security_rule.value.destination_port_range
-      source_address_prefix      = "VirtualNetwork"
+      source_address_prefix      = "*"
       destination_address_prefix = "*"
     }
   }

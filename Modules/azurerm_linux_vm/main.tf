@@ -19,7 +19,7 @@ resource "azurerm_linux_virtual_machine" "linux-vm" {
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
   size                = each.value.size
-  admin_username      = "$(each.value.vm-name)-user"
+  admin_username      = "devopsuser"
   admin_password = each.value.password
   network_interface_ids = [
     azurerm_network_interface.nic[each.key].id,
