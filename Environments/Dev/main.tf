@@ -37,3 +37,16 @@ module "bastion" {
   source = "../../Modules/azurerm_bastion_host"
   bastion = var.bastion
 }
+
+module "load-balancer" {
+  depends_on = [ module.my-rg,module.pip, module.linux-vm ]
+  source = "../../Modules/azurerm_load_balancer"
+  lb = var.lb
+  }
+
+module "lb-nic-association" {
+  depends_on = [ module.load-balancer, module.linux-vm ]
+  source = "../../Modules/azurerm_lb_pool_nic_association"
+  association = var.association
+}
+ 
