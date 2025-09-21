@@ -16,7 +16,7 @@ module "subnet" {
 }
 
 module "strg" {
-  depends_on = [module.my-rg]
+  depends_on = [module.my-rg, module.subnet]
   source     = "../../Modules/azurerm_storage_account"
   strg       = var.strg
   blob       = var.blob
@@ -46,6 +46,7 @@ module "bastion" {
 }
 
 module "win-vm" {
+    depends_on = [ module.subnet, module.nsg]
   source = "../../Modules/azurerm_windows_vm"
   win-vm = var.win-vm
 

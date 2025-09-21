@@ -108,6 +108,5 @@ win-vm = {
     nsg_name            = "nsg1"
     vm-name             = "sv-ep-win-vm"
     password            = "Password@123"
-
   }
 }

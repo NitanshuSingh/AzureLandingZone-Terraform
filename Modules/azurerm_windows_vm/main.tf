@@ -1,5 +1,5 @@
 resource "azurerm_windows_virtual_machine" "win_vm" {
-    for_each = var.win-vm
+  for_each            = var.win-vm
   name                = each.value.vm-name
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
@@ -15,12 +15,12 @@ resource "azurerm_windows_virtual_machine" "win_vm" {
     storage_account_type = "Standard_LRS"
   }
 
-  source_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2016-Datacenter"
+source_image_reference {
+    publisher = "MicrosoftWindowsDesktop"
+    offer     = "windows-10"
+    sku       = "win10-22h2-pro"
     version   = "latest"
-  }
+}
 }
 
 resource "azurerm_network_interface" "nic" {
