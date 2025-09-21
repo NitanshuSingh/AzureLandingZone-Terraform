@@ -1,26 +1,52 @@
-
-resource "azurerm_resource_group" "rg" {
-    for_each = var.rg
-    name = each.value.name
-    location = each.value.location
+module "my-rg" {
+  source = "../../Modules/azurerm_resource_group"
+  rg     = var.rg
 }
 
-# resource "azurerm_storage_account" "strg" {
-#     for_each = var.strg
-#     name = each.value.strg_name
-#     location = azurerm_resource_group.rg[each.key].location
-#     resource_group_name = azurerm_resource_group.rg[each.key].name
-#     account_replication_type = "LRS"
-#     account_tier = "Standard"
+module "vnet" {
+  depends_on = [module.my-rg]
+  source     = "../../Modules/azurerm_virtual_network"
+  vnet       = var.vnet
+}
+
+module "subnet" {
+  depends_on = [module.vnet]
+  source     = "../../Modules/azurerm_subnet"
+  subnet     = var.subnet
+}
+
+module "strg" {
+  depends_on = [module.my-rg]
+  source     = "../../Modules/azurerm_storage_account"
+  strg       = var.strg
+  blob       = var.blob
+}
+
+module "nsg" {
+  depends_on = [module.my-rg]
+  source     = "../../Modules/azurerm_network_security_group"
+  nsg        = var.nsg
+}
+
+module "pip" {
+  depends_on = [module.my-rg]
+  source     = "../../Modules/azurerm_public_ip"
+  pip        = var.pip
+}
+# module "linux-vm" {
+#   depends_on = [module.my-rg, module.nsg, module.subnet]
+#   source     = "../../Modules/azurerm_linux_vm"
+#   linux-vm   = var.linux-vm
 # }
 
+module "bastion" {
+  depends_on = [module.my-rg, module.pip, module.subnet]
+  source     = "../../Modules/azurerm_bastion_host"
+  bastion    = var.bastion
+}
 
-# resource "azurerm_storage_container" "blob" {
-#   for_each = var.blob
-#   name = each.value.blob_name
-#   storage_account_id = azurerm_storage_account.strg[each.key].id
-#   container_access_type = "private"
-# }
+module "win-vm" {
+  source = "../../Modules/azurerm_windows_vm"
+  win-vm = var.win-vm
 
-
-
+}

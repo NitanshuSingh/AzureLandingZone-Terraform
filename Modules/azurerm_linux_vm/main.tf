@@ -1,5 +1,5 @@
 resource "azurerm_network_interface" "nic" {
-  for_each = var.linux-vm
+  for_each            = var.linux-vm
   name                = each.value.nic_name
   location            = each.value.location
   resource_group_name = each.value.resource_group_name
@@ -13,14 +13,14 @@ resource "azurerm_network_interface" "nic" {
 
 
 resource "azurerm_linux_virtual_machine" "linux-vm" {
-  depends_on = [ azurerm_network_interface.nic ]
-  for_each = var.linux-vm
+  depends_on          = [azurerm_network_interface.nic]
+  for_each            = var.linux-vm
   name                = each.value.vm-name
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
   size                = each.value.size
   admin_username      = "devopsuser"
-  admin_password = each.value.password
+  admin_password      = each.value.password
   network_interface_ids = [
     azurerm_network_interface.nic[each.key].id,
   ]
@@ -37,11 +37,19 @@ resource "azurerm_linux_virtual_machine" "linux-vm" {
     sku       = "22_04-lts"
     version   = "latest"
   }
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt update -y",
+      "sudo apt install -y nginx",
+      "sudo systemctl enable nginx",
+      "sudo systemctl restart nginx"
+    ]
+  }
 }
 
 resource "azurerm_network_interface_security_group_association" "nic-nsg-association" {
-  for_each = var.linux-vm
-  network_interface_id = azurerm_network_interface.nic[each.key].id
+  for_each                  = var.linux-vm
+  network_interface_id      = azurerm_network_interface.nic[each.key].id
   network_security_group_id = data.azurerm_network_security_group.nsg-data[each.key].id
 }
 

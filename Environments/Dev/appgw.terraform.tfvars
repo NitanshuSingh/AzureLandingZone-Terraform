@@ -119,39 +119,39 @@ bastion = {
   }
 }
 
-lb = {
-  lb1 = {
-    lb_name             = "app-lb"
-    location            = "centralindia"
-    resource_group_name = "app-rg"
-    frontend_ip_name    = "frontend-ip"
-    pip_name            = "frontend-pip"
-    lb_pool_name        = "app-backend-pool"
-    lb_probe_name       = "app-lb-probe"
-    lb_rule_name        = "app-lb-rule"
-  }
-}
+# lb = {
+#   lb1 = {
+#     lb_name             = "app-lb"
+#     location            = "centralindia"
+#     resource_group_name = "app-rg"
+#     frontend_ip_name    = "frontend-ip"
+#     pip_name            = "frontend-pip"
+#     lb_pool_name        = "app-backend-pool"
+#     lb_probe_name       = "app-lb-probe"
+#     lb_rule_name        = "app-lb-rule"
+#   }
+# }
 
-association = {
-  assoc1 = {
-    lb_name             = "app-lb"
-    lb_pool_name        = "app-backend-pool"
-    nic_name            = "nic1"
-    resource_group_name = "app-rg"
-  }
-  assoc2 = {
-    lb_name             = "app-lb"
-    lb_pool_name        = "app-backend-pool"
-    nic_name            = "nic2"
-    resource_group_name = "app-rg"
-  }
-}
+# association = {
+#   assoc1 = {
+#     lb_name             = "app-lb"
+#     lb_pool_name        = "app-backend-pool"
+#     nic_name            = "nic1"
+#     resource_group_name = "app-rg"
+#   }
+#   assoc2 = {
+#     lb_name             = "app-lb"
+#     lb_pool_name        = "app-backend-pool"
+#     nic_name            = "nic2"
+#     resource_group_name = "app-rg"
+#   }
+# }
 
-registries = {
-  registry1 = {
-    acr_name            = "devregistry"
-    resource_group_name = "app-rg"
-    location            = "centralindia"
-    identity_name       = "acr_identity1"
-  }
-}
+# registries = {
+#   registry1 = {
+#     acr_name            = "devregistry"
+#     resource_group_name = "app-rg"
+#     location            = "centralindia"
+#     identity_name       = "acr_identity1"
+#   }
+# }

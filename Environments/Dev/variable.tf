@@ -27,10 +27,14 @@ variable "linux-vm" {
 variable "bastion" {
 
 }
-variable "lb" {
+# variable "lb" {
 
-}
+# }
 
-variable "association" {
+# variable "association" {
   
-}
+# }
+
+# variable "registries" {
+  
+# }

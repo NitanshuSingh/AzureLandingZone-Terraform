@@ -38,15 +38,21 @@ module "bastion" {
   bastion = var.bastion
 }
 
-module "load-balancer" {
-  depends_on = [ module.my-rg,module.pip, module.linux-vm ]
-  source = "../../Modules/azurerm_load_balancer"
-  lb = var.lb
-  }
+# module "load-balancer" {
+#   depends_on = [ module.my-rg,module.pip, module.linux-vm ]
+#   source = "../../Modules/azurerm_load_balancer"
+#   lb = var.lb
+#   }
 
-module "lb-nic-association" {
-  depends_on = [ module.load-balancer, module.linux-vm ]
-  source = "../../Modules/azurerm_lb_pool_nic_association"
-  association = var.association
-}
+# module "lb-nic-association" {
+#   depends_on = [ module.load-balancer, module.linux-vm ]
+#   source = "../../Modules/azurerm_lb_pool_nic_association"
+#   association = var.association
+# }
  
+# module "acr" {
+#   depends_on = [ module.my-rg ]
+#   source = "../../Modules/azurerm_azure_container_registry"
+#   registries = var.registries
+# }
+
